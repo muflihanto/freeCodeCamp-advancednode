@@ -1,5 +1,7 @@
+require("dotenv").config();
 const { ObjectID } = require("mongodb");
 const LocalStrategy = require("passport-local");
+const GitHubStrategy = require('passport-github').Strategy;
 const passport = require('passport');
 const bcrypt = require("bcrypt");
 
@@ -27,4 +29,15 @@ module.exports = function(app, myDataBase) {
       });
     })
   );
+
+  passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: "https://freecodecamp-advancednode.muflihanto.repl.co/auth/github/callback"
+  },
+    function(accessToken, refreshToken, profile, cb) {
+      console.log(profile);
+      //Database logic here with callback containing your user object
+    }
+  ));
 }
