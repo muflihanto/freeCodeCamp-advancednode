@@ -37,12 +37,6 @@ module.exports = function(app, myDataBase) {
       res.redirect('/');
     });
 
-  app.use((req, res, next) => {
-    res.status(404)
-      .type('text')
-      .send('Not Found');
-  });
-
   app.route('/register')
     .post((req, res, next) => {
       myDataBase.findOne({ username: req.body.username }, (err, user) => {
@@ -80,4 +74,10 @@ module.exports = function(app, myDataBase) {
 
   app.route("/auth/github/callback").get(
     passport.authenticate("github", { failureRedirect: "/" }), (req, res) => { res.redirect("/profile") })
+
+  app.use((req, res, next) => {
+    res.status(404)
+      .type('text')
+      .send('Not Found');
+  });
 }
