@@ -1,9 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function() {
   /*global io*/
   let socket = io.connect("https://freecodecamp-advancednode.muflihanto.repl.co/");
 
+  socket.on('user count', function(data) {
+    console.log(data);
+  });
+
   // Form submittion with new message in field with id 'm'
-  $('form').submit(function () {
+  $('form').submit(function() {
     var messageToSend = $('#m').val();
 
     $('#m').val('');
